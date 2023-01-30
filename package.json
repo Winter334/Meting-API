@@ -1,0 +1,22 @@
+{
+  "name": "meting-backend-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "type": "module",
+  "author": "xizeyoupan",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.0.1"
+  },
+  "dependencies": {
+    "@hono/node-server": "^0.2.4",
+    "hono": "^2.7.5"
+  }
+}
