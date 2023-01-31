@@ -23,6 +23,11 @@ export default async (ctx) => {
 
     if (type === 'url') {
         let url = data
+
+        if (!url) {
+            ctx.status(403)
+            return ctx.json({ error: 'no url' })
+        }
         if (url.startsWith('@'))
             return ctx.text(url)
 
@@ -57,8 +62,9 @@ export default async (ctx) => {
 
     return ctx.json(data.map(x => {
         for (let i of ['url', 'pic', 'lrc']) {
-            if (!x[i].startsWith('@') && !x[i].startsWith('http') && x[i].length > 0) {
-                x[i] = `${req_url}?server=${server}&type=${i}&id=${x[i]}`
+            const _ = String(x[i])
+            if (!_.startsWith('@') && !_.startsWith('http') && _.length > 0) {
+                x[i] = `${req_url}?server=${server}&type=${i}&id=${_}`
             }
         }
         return x

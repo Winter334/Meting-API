@@ -1,0 +1,11 @@
+{
+    "env": {
+        "OVERSEAS": "1"
+    },
+    "redirects": [
+        {
+            "source": "/",
+            "destination": "/api"
+        }
+    ]
+}

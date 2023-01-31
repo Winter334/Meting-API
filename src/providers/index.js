@@ -1,9 +1,14 @@
 import tencent from "./tencent/index.js"
+import netease from './netease/index.js'
 
 class Providers {
+
     constructor() {
         this.providers = {}
+
         tencent.register(this)
+        netease.register(this)
+
     }
 
     register(provider_name, handle_obj) {

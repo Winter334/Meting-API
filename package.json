@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build:all": "node esbuild.config.js && sed -i '1i\\var global = globalThis' dist/cloudflare-workers.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
@@ -13,10 +14,16 @@
   "author": "xizeyoupan",
   "license": "MIT",
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^15.0.1"
+    "esbuild-plugin-resolve": "^1.0.3"
   },
   "dependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@hono/node-server": "^0.2.4",
-    "hono": "^2.7.5"
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
+    "esbuild": "0.17.5",
+    "events-polyfill": "^2.1.2",
+    "hono": "^2.7.5",
+    "stream-browserify": "^3.0.0"
   }
 }
