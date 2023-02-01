@@ -1,13 +1,7 @@
 import encrypt from './crypto.js'
 import config from '../../config.js'
+import { customAlphabet } from 'nanoid/non-secure'
 
-let customAlphabet
-
-if (config.isDeno) {
-    customAlphabet = (await import('https://esm.sh/nanoid@4.0.0/non-secure')).customAlphabet
-} else {
-    customAlphabet = (await import('nanoid/non-secure')).customAlphabet
-}
 const nanoid = customAlphabet('1234567890abcdef', 32)
 
 const chooseUserAgent = (ua = false) => {

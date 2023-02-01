@@ -1,15 +1,8 @@
-import config from '../../config.js';
+// import crypto from 'https://esm.sh/crypto-browserify@3.12.0'
+// import { Buffer } from 'https://esm.sh/buffer@6.0.3'
 
-let crypto
-let Buffer
-
-if (config.isDeno) {
-  crypto = (await import('https://esm.sh/crypto-browserify@3.12.0'))
-  Buffer = (await import('https://esm.sh/buffer@6.0.3')).Buffer
-} else {
-  crypto = (await import('crypto'))
-  Buffer = (await import('buffer/index.js')).Buffer
-}
+import crypto from 'crypto-browserify'
+import { Buffer } from 'buffer/index.js'
 
 const iv = Buffer.from('0102030405060708')
 const presetKey = Buffer.from('0CoJUm6Qyw8W8jud')

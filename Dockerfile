@@ -16,12 +16,12 @@ ENV GID=${GID:-1010}
 RUN addgroup -g ${GID} --system meting \
     && adduser -G meting --system -D -s /bin/sh -u ${UID} meting
 
-COPY --from=0 /app/dist/cloudflare-workers.js /app/dist/cloudflare-workers.js
-RUN deno cache /app/dist/cloudflare-workers.js
+COPY --from=0 /app/dist/deno.js /app/dist/deno.js
+RUN deno cache /app/dist/deno.js
 
 RUN chown -R meting:meting /app
 USER meting
 
 EXPOSE 3000
 
-CMD deno run --allow-net --allow-env /app/dist/cloudflare-workers.js
+CMD deno run --allow-net --allow-env /app/dist/deno.js

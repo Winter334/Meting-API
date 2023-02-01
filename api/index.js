@@ -25,7 +25,7 @@ async function writeReadableStreamToWritable(stream, writable) {
 }
 
 class NodeResponse extends Response {
-    headers() {
+    get headers() {
         return super.headers
     }
 
@@ -95,4 +95,4 @@ const getRequestListener = (fetchCallback) => {
     }
 }
 
-export default getRequestListener(app)
+export default getRequestListener(app.fetch)
