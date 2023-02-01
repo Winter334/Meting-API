@@ -7,7 +7,7 @@ if (config.isDeno) {
   crypto = (await import('https://esm.sh/crypto-browserify@3.12.0'))
   Buffer = (await import('https://esm.sh/buffer@6.0.3')).Buffer
 } else {
-  crypto = (await import('crypto-browserify'))
+  crypto = (await import('crypto'))
   Buffer = (await import('buffer/index.js')).Buffer
 }
 

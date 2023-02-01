@@ -26,7 +26,7 @@ app.get('/api', api)
 app.get('/', (c) => c.text('你好！'))
 
 if (isDeno) {
-    serve(app.fetch, { port: config.PORT, hostname: 'localhost' })
+    serve(app.fetch, { port: config.PORT })
 } else if (isNode) {
     serve({
         fetch: app.fetch,

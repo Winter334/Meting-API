@@ -1,6 +1,6 @@
 let OVERSEAS;
 if (typeof globalThis?.WebSocketPair === 'function') {
-    OVERSEAS = true
+    OVERSEAS = '1'
 } else {
     OVERSEAS = globalThis?.Deno?.env?.get("OVERSEAS") || globalThis?.process?.env?.OVERSEAS
 }

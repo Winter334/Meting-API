@@ -1,13 +1,14 @@
 import encrypt from './crypto.js'
 import config from '../../config.js'
 
-let crypto
+let customAlphabet
 
 if (config.isDeno) {
-    crypto = (await import('https://esm.sh/crypto-browserify@3.12.0'))
+    customAlphabet = (await import('https://esm.sh/nanoid@4.0.0/non-secure')).customAlphabet
 } else {
-    crypto = (await import('crypto-browserify'))
+    customAlphabet = (await import('nanoid/non-secure')).customAlphabet
 }
+const nanoid = customAlphabet('1234567890abcdef', 32)
 
 const chooseUserAgent = (ua = false) => {
     const userAgentList = {
@@ -73,8 +74,8 @@ export const request = async (method, url, data = {}, options) => {
         options.cookie = {
             ...options.cookie,
             __remember_me: true,
-            NMTID: crypto.randomBytes(16).toString('hex'),
-            _ntes_nuid: crypto.randomBytes(16).toString('hex'),
+            NMTID: nanoid(),
+            _ntes_nuid: nanoid(),
         }
         if (!options.cookie.MUSIC_U) {
             // 游客
