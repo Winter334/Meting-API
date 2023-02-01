@@ -52,3 +52,40 @@ export const getPathFromURL = (url, strict = true) => {
   }
   return result;
 };
+
+export const get_runtime = () => {
+
+  if (globalThis?.process?.env?.RUNTIME) {
+    return globalThis?.process?.env?.RUNTIME
+  }
+
+  if (globalThis?.Deno !== undefined) {
+    return 'deno'
+  }
+
+  if (globalThis?.Bun !== undefined) {
+    return 'bun'
+  }
+
+  if (typeof globalThis?.WebSocketPair === 'function') {
+    return 'cloudflare'
+  }
+
+  if (globalThis?.fastly !== undefined) {
+    return 'fastly'
+  }
+
+  if (typeof globalThis?.EdgeRuntime === 'string') {
+    return 'vercel'
+  }
+
+  if (globalThis?.process?.release?.name === 'node') {
+    return 'node'
+  }
+
+  if (globalThis?.__lagon__ !== undefined) {
+    return 'lagon'
+  }
+
+  return 'other'
+}

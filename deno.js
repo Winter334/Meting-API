@@ -1,5 +1,5 @@
 import config from './src/config.js'
-import app from './index.js'
+import app from './app.js'
 import { serve } from 'https://deno.land/std/http/server.ts'
 
 

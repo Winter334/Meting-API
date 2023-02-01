@@ -5,7 +5,7 @@ import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfil
 import textReplace from 'esbuild-plugin-text-replace'
 
 await esbuild.build({
-    entryPoints: ['./index.js'],
+    entryPoints: ['./app.js'],
     bundle: true,
     format: 'esm',
     outfile: './dist/cloudflare-workers.js',

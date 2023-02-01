@@ -1,10 +1,10 @@
 {
     "env": {
-        "OVERSEAS": "1"
+        "RUNTIME": "vercel"
     },
-    "redirects": [
+    "rewrites": [
         {
-            "source": "/",
+            "source": "/(.*)",
             "destination": "/api"
         }
     ]

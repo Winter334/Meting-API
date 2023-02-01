@@ -1,4 +1,4 @@
-import app from "../index.js"
+import app from "../app.js"
 
 async function writeReadableStreamToWritable(stream, writable) {
     let reader = stream.getReader()
