@@ -51,21 +51,21 @@ jobs:
         with:
           load: true
           push: false
-          tags: meting-api:${{ inputs.deploy_tag }}
+          tags: meting-api:latest
           context: .
 
       - name: Test Docker image
         run: bash scripts/docker/test-docker.sh
         env:
-          TAG: ${{ inputs.deploy_tag }}
+          TAG: latest
 
       - name: Export Docker image
-        run: docker save meting-api:${{ inputs.deploy_tag }} | gzip -1cf > meting.tar.gz
+        run: docker save meting-api:latest | gzip -1cf > meting.tar.gz
 
       - name: Upload Docker image
         uses: actions/upload-artifact@v3
         with:
-          name: meting.${{ inputs.deploy_tag }}.tar.gz
+          name: meting.tar.gz
           path: meting.tar.gz
           retention-days: 1
 
