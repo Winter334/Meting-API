@@ -48,9 +48,11 @@ export default async (ctx) => {
     let req_url = perfix ? perfix + getPathFromURL(ctx.req.url.split('?')[0]) : ctx.req.url.split('?')[0]
     if (runtime === 'vercel') req_url = req_url.replace('http://', 'https://')
 
+    // json 类型数据填充api
     return ctx.json(data.map(x => {
         for (let i of ['url', 'pic', 'lrc']) {
             const _ = String(x[i])
+            // 正常对象_均为id，以下例外不用填充：1.@开头/size为0=>qq音乐jsonp 2.已存在完整链接
             if (!_.startsWith('@') && !_.startsWith('http') && _.length > 0) {
                 x[i] = `${req_url}?server=${server}&type=${i}&id=${_}`
             }

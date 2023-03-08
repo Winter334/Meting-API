@@ -26,7 +26,57 @@ Meting后端的api结构较为复杂，基础是一个[接口](https://github.co
 - 采用jsonp解决Tencent系地区限制
 - 插件系统，编写新接口及音源简单
 
+## 进度
+
+|               | server参数名称 | 单曲/song | 歌单/playlist |
+| ------------- | -------------- | --------- | ------------- |
+| 网易云        | netease        | √         | √             |
+| qq音乐        | tencent        | √         | √             |
+| youtube music | ytmusic        | √         | √             |
+| more..        |                |           |               |
+
+## 地区限制
+
+### 部署在国外
+
+| 客户端/浏览器访问地区 | 国内 | 国外 |
+| --------------------- | ---- | ---- |
+| 网易云                | √    | √    |
+| qq音乐                | √¹   | ×    |
+| youtube music         | √²   | √    |
+
+### 部署在国内
+
+| 客户端/浏览器访问地区 | 国内 | 国外 |
+| --------------------- | ---- | ---- |
+| 网易云                | √    | √    |
+| qq音乐                | √    | ×    |
+| youtube music         | √²   | √    |
+
+¹使用jsonp，**需要替换前端插件**， https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js => https://cdn.jsdelivr.net/npm/@xizeyoupan/meting@latest/dist/Meting.min.js , or 
+https://unpkg.com/meting@2.0.1/dist/Meting.min.js => https://unpkg.com/@xizeyoupan/meting@latest/dist/Meting.min.js
+
+More info https://github.com/xizeyoupan/MetingJS
+
+²见下方参数配置
+
+## 参数配置
+以下参数均由环境变量配置
+
+- YT_API
+  默认的youtube music api地址。youtube music的可用性取决于YT_API的连通性。已经内置了一个。如果你需要自己部署youtube music api，[此仓库](https://github.com/xizeyoupan/ytmusic-api-server)提供示例。注：youtube music api必须部署在国外！
+- OVERSEAS
+  用于判断是否部署于国外。设为1会启用qq音乐的jsonp返回，同时需要替换[前端插件](https://github.com/xizeyoupan/MetingJS)，能实现国内访问国外api服务解析qq音乐。部署在国内不用设置这个选项。当部署到vercel上时，此选项自动设为1。
+- PORT
+  api监听端口，也是docker需要映射的端口。默认3000
+- UID
+  用于docker，默认1010
+- GID
+  用于docker，默认1010
+
 ## api网址
+仅为示例，不保证稳定性
+
 https://meting-dd.2333332.xyz/api => Deno Deploy
 
 https://meting-ve.2333332.xyz/api => vercel
@@ -34,21 +84,6 @@ https://meting-ve.2333332.xyz/api => vercel
 https://m.boochinoob.shop/api => cloudflare (deprecated, see below)
 
 可自行测试，如 https://meting-dd.2333332.xyz/test
-
-## 进度
-
-**从国内访问**
-
-|        | 单曲/song | 歌单/playlist | 地区限制 |
-| ------ | --------- | ------------- | -------- |
-| 网易云 | √         | √             | 无       |
-| qq音乐 | √         | √             | 无*      |
-| more   |           |               |          |
-
-\*使用jsonp，**需要替换前端插件**， https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js => https://cdn.jsdelivr.net/npm/@xizeyoupan/meting@latest/dist/Meting.min.js , or 
-https://unpkg.com/meting@2.0.1/dist/Meting.min.js => https://unpkg.com/@xizeyoupan/meting@latest/dist/Meting.min.js
-
-More info https://github.com/xizeyoupan/MetingJS
 
 ## 部署
 

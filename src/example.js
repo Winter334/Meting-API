@@ -12,4 +12,8 @@ export default {
         "lrc": { "show": false, "value": "2015217630" },
         "url": { "show": false, "value": "473403185" },
     },
+    "ytmusic": {
+        "playlist": { "show": true, "value": "RDCLAK5uy_l12ynH8dyLsBmE11ToAHLm9P04NS2i9ME" },
+        "song": { "show": true, "value": "G3s98l2-GXg" }
+    }
 }
