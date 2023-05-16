@@ -28,12 +28,13 @@ Meting后端的api结构较为复杂，基础是一个[接口](https://github.co
 
 ## 进度
 
-|               | server参数名称 | 单曲/song | 歌单/playlist |
-| ------------- | -------------- | --------- | ------------- |
-| 网易云        | netease        | √         | √             |
-| qq音乐        | tencent        | √         | √             |
-| youtube music | ytmusic        | √         | √             |
-| more..        |                |           |               |
+|               | server参数名称 | 图片 | 歌词 | url | 单曲/song | 歌单/playlist |
+| ------------- | -------------- | ---- | ---- | --- | --------- | ------------- |
+| 网易云        | netease        | √    | √    | √   | √         | √             |
+| qq音乐        | tencent        | √    | √    | √   | √         | √             |
+| youtube music | ytmusic        | √    | √⁰   | √   | √         | √             |
+| spotify       | spotify        | √    | √⁰   | √⁰   | √⁰         | √⁰             |
+| more..        |                |      |      |     |           |               |
 
 ## 地区限制
 
@@ -44,6 +45,7 @@ Meting后端的api结构较为复杂，基础是一个[接口](https://github.co
 | 网易云                | √    | √    |
 | qq音乐                | √¹   | ×    |
 | youtube music         | √²   | √    |
+| spotify music         | √²   | √    |
 
 ### 部署在国内
 
@@ -52,6 +54,9 @@ Meting后端的api结构较为复杂，基础是一个[接口](https://github.co
 | 网易云                | √    | √    |
 | qq音乐                | √    | ×    |
 | youtube music         | √²   | √    |
+| spotify music         | √²   | √    |
+
+⁰youtube和spotify的歌词由于不易访问，由 https://github.com/rtcq/syncedlyrics 检索而来，歌词匹配准确度不会很高。spotify的音乐源由 https://github.com/spotDL/spotify-downloader 检索而来，歌曲匹配准确度不会很高，并且获取url的时间极长，会反映在spotify歌曲加载缓慢。
 
 ¹使用jsonp，**需要替换前端插件**， https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js => https://cdn.jsdelivr.net/npm/@xizeyoupan/meting@latest/dist/Meting.min.js , or 
 https://unpkg.com/meting@2.0.1/dist/Meting.min.js => https://unpkg.com/@xizeyoupan/meting@latest/dist/Meting.min.js
@@ -64,7 +69,7 @@ More info https://github.com/xizeyoupan/MetingJS
 以下参数均由环境变量配置
 
 - YT_API
-  默认的youtube music api地址。youtube music的可用性取决于YT_API的连通性。已经内置了一个。如果你需要自己部署youtube music api，[此仓库](https://github.com/xizeyoupan/ytmusic-api-server)提供示例。注：youtube music api必须部署在国外！
+  默认的youtube music和spotify的api地址。国内可用性取决于YT_API的连通性。已经内置了一个。（每月限额，用完即止）如果你需要自己部署youtube music和spotify的api，[此仓库](https://github.com/xizeyoupan/ytmusic-api-server)提供示例。
 - OVERSEAS
   用于判断是否部署于国外。设为1会启用qq音乐的jsonp返回，同时需要替换[前端插件](https://github.com/xizeyoupan/MetingJS)，能实现国内访问国外api服务解析qq音乐。部署在国内不用设置这个选项。当部署到vercel上时，此选项自动设为1。
 - PORT
@@ -80,8 +85,6 @@ More info https://github.com/xizeyoupan/MetingJS
 https://meting-dd.2333332.xyz/api => Deno Deploy
 
 https://meting-ve.2333332.xyz/api => vercel
-
-https://m.boochinoob.shop/api => cloudflare (deprecated, see below)
 
 可自行测试，如 https://meting-dd.2333332.xyz/test
 
@@ -134,18 +137,6 @@ docker run -d --name meting -p 3000:3000 intemd/meting-api:latest
 
 一直下一步即可。
 
-### Cloudflare Workers
-
-<details><summary>deprecated</summary>
-
-由于cf会[自动去除x-real-ip以及在headers中加shit](https://developers.cloudflare.com/fundamentals/get-started/reference/http-request-headers/#cf-connecting-ip-in-worker-subrequests)，网易云可能会失效。使用网易云的同学请尝试其他部署方式。
-
-在全球拥有数据中心，提供的域名被阻断，使用自有域名后速度很快。冷启动速度很快。
-
-fork本项目，依次点击actions/publish/run workflow。保持默认即可。待CI构建结束后下载cloudflare-workers.js并解压。在[Workers](https://dash.cloudflare.com)创建一个Service，点右上角Quick edit。把cloudflare-workers.js的内容复制进去deploy即可。
-
-</details>
-
 ### Deno Deploy
 
 类似Cloudflare Workers，但提供的域名未被阻断，使用Deno为runtime。
@@ -160,67 +151,6 @@ fork本项目后新建一个[project](https://dash.deno.com/projects)，首先�
 ```
 
 接着在actions/publish/run workflow中勾选Deno即可。
-
-<details><summary>部署到国内平台</summary>
-
-目前国内云服务商呈现两超多强的态势。本人到官方文档翻来翻去，发现各厂商免费的云函数服务是越来越少了，腾讯云免费额度就[三个月](https://cloud.tencent.com/document/product/583/12282)，阿里云似乎有[一年](https://help.aliyun.com/document_detail/54301.html)。
-
-#### 华为云
-
-> 不是华为我不用。因为他是有良心的，中国制造🫡
-
-目前华为云每个月提供一定的[免费额度](https://support.huaweicloud.com/productdesc-functiongraph/functiongraph_01_0190.html)，包括[日志](https://www.huaweicloud.com/pricing.html?tab=detail#/aom)。
-
-> 爆！爆！爆！这下真的爆了！
-
-👆指的是华为云虽然函数工作流有免费额度，但配套的API网关却不免费，这不刚调试完没多久就发现欠费1分钱，无奈被迫充值了**1元**。理论上1元应该能用挺久的。当然你如果没有1元，也可以选择充1毛试试水。
-
-1. 注册并认证
-   - 中国站需要手机验证码+实名认证。
-   - 外国站需要手机验证码+可用的Visa/MasterCard/*信用卡。
-
-2. 下载镜像
-
-   - 在github上Fork本项目。
-   - 依次点击actions/workflow/run workflow。 ![](assets/1.png)
-   - 等待CI完成后点进第一个workflow下载artifact。 ![](assets/2.png)
-   - 从下载的文件中解压出meting.tar.gz。
-
-3. 上传镜像
-
-   - 登录[镜像服务](https://console.huaweicloud.com/swr)，选择页面上传，创建一个名字随意的组织，上传镜像。
-   - 点击meting-api，找到下载指令，复制 docker pull 后面的镜像地址。
-
-4. 创建函数
-
-   - 在[函数服务](https://console.huaweicloud.com/functiongraph)点击创建函数。注意类型选**HTTP**。 ![](assets/3.png) 
-   - 区域选国内的，并且后续服务也建议开在相同区域。
-   - 镜像填刚刚复制的地址。
-
-5. 创建委托
-
-   - 名称随便。
-   - 类型选云服务。
-   - 云服务选择"函数工作流 FunctionGraph"。
-   - 下一步策略勾选"SWR Admin"即可。
-   - 一路完成，返回创建函数页面选择刚创建的委托，创建函数。
-
-6. 设置函数
-
-   - 建议需要调整的设置如下： ![](assets/4.png) ![](assets/5.png)
-   - 创建触发器，其中分组按提示创建即可。 ![](assets/6.png)
-
-7. 设置网关
-
-   - 点击刚创建的APIG触发器，右上角编辑，这里除了改请求path，其他都下一步。 ![](assets/7.png)
-   - 接着发布API。在API详情界面可以看到你的API URL。在其后加上/api访问，能看到数据就说明成功了。
-
-
-8. 完成
-
-   总结一下：华为云的这个服务确实又臭又长，对于大公司可能叫生态丰富，体系健全，但对想快速上手的同学确实不太友好。各服务之间的文档分布松散，难以跳转。在我写这段话的时候还突然抽风了几小时，我还以为昨晚能跑的代码怎么睡一觉就不好使了。当然把Meting用js重写可能会是一个更好的选择。
-
-</details>
 
 ## 杂项
 
