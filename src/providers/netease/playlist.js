@@ -1,4 +1,5 @@
 import { request } from './util.js'
+import { map_song_list } from "./util.js"
 
 export const get_playlist = async (id, cookie = '') => {
     const data = {
@@ -31,13 +32,7 @@ export const get_playlist = async (id, cookie = '') => {
         { crypto: 'weapi' }
     )
 
-    res = res.songs.map(song => ({
-        title: song.name,
-        author: song.ar.reduce((i, v) => ((i ? i + " / " : i) + v.name), ''),
-        pic: song.al.picUrl,
-        url: song.id,
-        lrc: song.id
-    }))
+    res = map_song_list(res)
 
     return res
 

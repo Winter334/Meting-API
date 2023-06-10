@@ -1,4 +1,5 @@
 import { request } from "./util.js"
+import { map_song_list } from "./util.js"
 
 export const get_song_url = async (id, cookie = '') => {
 
@@ -40,14 +41,8 @@ export const get_song_info = async (id, cookie = '') => {
         throw res
     }
 
-    res = {
-        title: res.songs[0].name,
-        author: res.songs[0].ar.reduce((i, v) => ((i ? i + " / " : i) + v.name), ''),
-        pic: res.songs[0].al.picUrl,
-        url: res.songs[0].id,
-        lrc: res.songs[0].id
-    }
-    return [res]
+    res = map_song_list(res)
+    return res
 }
 
 

@@ -177,3 +177,13 @@ export const request = async (method, url, data = {}, options) => {
     return res;
 
 }
+
+export const map_song_list = (song_list) => {
+    return song_list.songs.map(song => ({
+        title: song.name,
+        author: song.ar.reduce((i, v) => ((i ? i + " / " : i) + v.name), ''),
+        pic: song.al.picUrl,
+        url: song.id,
+        lrc: song.id
+    }))
+}
