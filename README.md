@@ -56,7 +56,7 @@ Meting后端的api结构较为复杂，基础是一个[接口](https://github.co
 | youtube music         | √²   | √    |
 | spotify music         | √²   | √    |
 
-⁰youtube和spotify的歌词由于不易访问，由 https://github.com/rtcq/syncedlyrics 检索而来，歌词匹配准确度不会很高。spotify的音乐源由 https://github.com/spotDL/spotify-downloader 检索而来，歌曲匹配准确度不会很高，并且获取url的时间极长，会反映在spotify歌曲加载缓慢。
+⁰youtube和spotify的歌词由于不易访问，由 https://github.com/xizeyoupan/syncedlyrics_aio 检索而来，歌词匹配准确度不会特别高。spotify的音乐源由 https://github.com/spotDL/spotify-downloader 检索而来，歌曲匹配准确度不会很高，并且获取url的时间较长，使spotify歌曲加载缓慢。
 
 ¹使用jsonp，**需要替换前端插件**， https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js => https://cdn.jsdelivr.net/npm/@xizeyoupan/meting@latest/dist/Meting.min.js , or 
 https://unpkg.com/meting@2.0.1/dist/Meting.min.js => https://unpkg.com/@xizeyoupan/meting@latest/dist/Meting.min.js
@@ -69,7 +69,7 @@ More info https://github.com/xizeyoupan/MetingJS
 以下参数均由环境变量配置
 
 - YT_API
-  默认的youtube music和spotify的api地址。国内可用性取决于YT_API的连通性。已经内置了一个。（每月限额，用完即止）如果你需要自己部署youtube music和spotify的api，[此仓库](https://github.com/xizeyoupan/ytmusic-api-server)提供示例。
+  默认的youtube music和spotify的api地址。国内可用性取决于YT_API的连通性。**你需要自己部署youtube music和spotify的api**。[此仓库](https://github.com/xizeyoupan/ytmusic-api-server)提供示例。
 - OVERSEAS
   用于判断是否部署于国外。设为1会启用qq音乐的jsonp返回，同时需要替换[前端插件](https://github.com/xizeyoupan/MetingJS)，能实现国内访问国外api服务解析qq音乐。部署在国内不用设置这个选项。当部署到vercel上时，此选项自动设为1。
 - PORT
