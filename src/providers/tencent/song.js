@@ -21,7 +21,7 @@ export const get_song_url = async (id, cookie = '') => {
             module: 'vkey.GetVkeyServer',
             method: 'CgiGetVkey',
             param: {
-                filename: file,
+                // filename: file,
                 guid: guid,
                 songmid: id,
                 songtype: [0],
