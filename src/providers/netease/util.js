@@ -64,17 +64,20 @@ export const request = async (method, url, data = {}, options) => {
         headers['X-Forwarded-For'] = ip
     }
     // headers['X-Real-IP'] = '118.88.88.88'
+    if (typeof options.cookie === "undefined")
+        options.cookie = {}
+
     if (typeof options.cookie === 'object') {
         options.cookie = {
             ...options.cookie,
             __remember_me: true,
-            NMTID: nanoid(),
+            // NMTID: nanoid(),
             _ntes_nuid: nanoid(),
         }
         if (!options.cookie.MUSIC_U) {
             // 游客
             if (!options.cookie.MUSIC_A) {
-                options.cookie.MUSIC_A = config.anonymous_token
+                options.cookie.MUSIC_A = config.net_ease_anonymous_token
             }
         }
         headers['Cookie'] = Object.keys(options.cookie)
