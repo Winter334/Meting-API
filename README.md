@@ -84,8 +84,6 @@ More info https://github.com/xizeyoupan/MetingJS
 
 https://meting-dd.2333332.xyz/api => Deno Deploy
 
-https://meting-ve.2333332.xyz/api => vercel
-
 可自行测试，如 https://meting-dd.2333332.xyz/test
 
 ## 部署
@@ -133,6 +131,8 @@ docker run -d --name meting -p 3000:3000 intemd/meting-api:latest
 
 比较出名，提供的域名被阻断，使用自有域名后速度尚可。冷启动速度一般。
 
+**23年9月后vercel疑似升级了node版本，新部署应该会失败，建议用下面的deno部署。**
+
 <a href="https://vercel.com/import/project?template=https://github.com/xizeyoupan/Meting-API"><img src="https://vercel.com/button" height="36"></a>
 
 一直下一步即可。
@@ -141,12 +141,12 @@ docker run -d --name meting -p 3000:3000 intemd/meting-api:latest
 
 类似Cloudflare Workers，但提供的域名未被阻断，使用Deno为runtime。
 
-fork本项目后新建一个[project](https://dash.deno.com/projects)，首先在设置中加一个Environment Variable，名称是OVERSEAS，值为1。接着link到你自己的项目，部署方式选action，project的name需要与你自己的yml吻合。
+fork本项目后新建一个[project](https://dash.deno.com/projects)，首先在设置中加一个Environment Variable，名称是OVERSEAS，值为1。接着link到你自己的项目，部署方式选action，Deno Deploy 的 project 的 name 需要与你自己的yml中设置的吻合。
 
 ```yml
         uses: denoland/deployctl@v1
         with:
-          project: meting #这里要改成你的project的name
+          project: meting #这里要改成你的Deno Deploy的project的name
           entrypoint: deno.js
 ```
 
