@@ -89,3 +89,11 @@ export const get_runtime = () => {
 
   return 'other'
 }
+
+export const get_url = (ctx) => {
+  const runtime = get_runtime()
+  const perfix = ctx.req.header('X-Forwarded-Host') || ctx.req.header('X-Forwarded-Url')
+  let req_url = perfix ? perfix + getPathFromURL(ctx.req.url.split('?')[0]) : ctx.req.url.split('?')[0]
+  if (runtime === 'vercel') req_url = req_url.replace('http://', 'https://')
+  return req_url
+}

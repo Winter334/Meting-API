@@ -1,5 +1,5 @@
 import encrypt from './crypto.js'
-import config from '../../config.js'
+import { net_ease_anonymous_token } from './config.js'
 import { customAlphabet } from 'nanoid/non-secure'
 
 const nanoid = customAlphabet('1234567890abcdef', 32)
@@ -77,7 +77,7 @@ export const request = async (method, url, data = {}, options) => {
         if (!options.cookie.MUSIC_U) {
             // 游客
             if (!options.cookie.MUSIC_A) {
-                options.cookie.MUSIC_A = config.net_ease_anonymous_token
+                options.cookie.MUSIC_A = net_ease_anonymous_token
             }
         }
         headers['Cookie'] = Object.keys(options.cookie)
