@@ -17,13 +17,13 @@ Meting后端的基础是一个[接口](https://github.com/metowolf/Meting/blob/m
 
 ## 进度
 
-|               | server参数名称 | 图片 | 歌词 | url | 单曲/song | 歌单/playlist | 歌手/artist |
-| ------------- | -------------- | ---- | ---- | --- | --------- | ------------- | ----------- |
-| 网易云        | netease        | √    | √    | √   | √         | √             | √           |
-| qq音乐        | tencent        | √    | √    | √   | √         | √             | ×           |
-| youtube music | ytmusic        | √    | √⁰   | √   | √         | √             | ×           |
-| spotify       | spotify        | √    | √⁰   | √⁰  | √⁰        | √⁰            | ×           |
-| more..        |                |      |      |     |           |               |             |
+|               | server参数名称 | 图片 | 歌词 | url | 单曲/song | 歌单/playlist | 歌手/artist | 搜索/search |
+| ------------- | -------------- | ---- | ---- | --- | --------- | ------------- | ----------- |--------- |
+| 网易云        | netease        | √    | √    | √   | √         | √             | √           |√         |
+| qq音乐        | tencent        | √    | √    | √   | √         | √             | ×           |×         |
+| youtube music | ytmusic        | √    | √⁰   | √   | √         | √             | ×           |×         |
+| spotify       | spotify        | √    | √⁰   | √⁰  | √⁰        | √⁰            | ×           |×         |
+| more..        |                |      |      |     |           |               |             |         |
 
 ## 地区限制
 

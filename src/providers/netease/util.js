@@ -182,11 +182,14 @@ export const request = async (method, url, data = {}, options) => {
 }
 
 export const map_song_list = (song_list) => {
-    return song_list.songs.map(song => ({
-        title: song.name,
-        author: song.ar.reduce((i, v) => ((i ? i + " / " : i) + v.name), ''),
-        pic: song.al.picUrl,
-        url: song.id,
-        lrc: song.id
-    }))
+    return song_list.songs.map(song => {
+        const artists = song.ar || song.artists
+        return {
+            title: song.name,
+            author: artists.reduce((i, v) => ((i ? i + " / " : i) + v.name), ''),
+            pic: song?.al?.picUrl || song.id,
+            url: song.id,
+            lrc: song.id
+        }
+    })
 }
