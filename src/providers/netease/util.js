@@ -50,15 +50,7 @@ const cnip = () => {
 
 
 export const request = async (method, url, data = {}, options) => {
-    if (typeof window !== 'undefined') { // 客户端环境
-        const savedCookie = localStorage.getItem('netease-cookie')
-        if (savedCookie) {
-          options.cookie = {
-            ...options.cookie,
-            ...JSON.parse(savedCookie)
-          }
-        }
-    }
+
     let headers = { 'User-Agent': chooseUserAgent(options.ua) }
     if (method.toUpperCase() === 'POST')
         headers['Content-Type'] = 'application/x-www-form-urlencoded'
